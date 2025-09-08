@@ -69,7 +69,7 @@ def main():
 
     train_loader = make_dataloader_single(args.deg_dir, args.clean_dir,args.batch_size, args.num_workers,args.resize,args.shuffle,args.pin_memory)
     val_loader = make_dataloader_single(args.val_deg_dir, args.val_clean_dir,args.batch_size, args.num_workers,args.resize,False,args.pin_memory)
-    test_loader=None
+    test_loader=make_dataloader_single(args.val_deg_dir, args.val_clean_dir,args.batch_size, args.num_workers,args.resize,False,args.pin_memory)
 
     # 加载并冻结预训练 SAD 模型
     sad = SAD(in_channels=128).to(device)
@@ -86,6 +86,8 @@ def main():
     if args.resume_from:
         trainer.load_checkpoint(args.resume_from)
     trainer.train()
+
+    # trainer.test()
 
 
 if __name__ == '__main__':

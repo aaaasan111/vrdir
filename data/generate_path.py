@@ -30,7 +30,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate haze-GT image pairs for RESIDE ITS subset')
     parser.add_argument('--gt_dir', type=str, default="",
                         help='Path to GT images directory')
-    parser.add_argument('--haze_dir', type=str, default="",
+    parser.add_argument('--deg_dir', type=str, default="",
                         help='Path to haze images directory')
     parser.add_argument('--output', type=str, default='', help='Output txt file path')
     args = parser.parse_args()

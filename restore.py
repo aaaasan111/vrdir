@@ -109,3 +109,29 @@ class Trainer:
                     grid = torch.cat([clean, deg_recon], dim=0)
                     save_image(grid, os.path.join(vis_dir, f'epoch{epoch}_idx{idx}.png'), nrow=clean.size(0))
         print(f"Saved validation images for epoch {epoch}")
+    
+    def test(self):
+        self.sad.eval()
+        self.ise.eval()
+        
+        vis_dir = os.path.join(self.work_dir, 'test_images')
+        os.makedirs(vis_dir, exist_ok=True)
+        saved_count = 0
+
+        with torch.no_grad():
+            for idx, (deg, clean) in enumerate(self.test_loader):
+                deg, clean = deg.to(self.device), clean.to(self.device)
+                # clean_feat = self.ext(clean) # 提取特征
+                deg_feat = self.ext(deg)
+                deg_ise = self.ise(deg_feat)
+                deg_recon = self.sad(deg_ise)
+
+                # 保存图像
+                save_image(deg_recon, os.path.join(vis_dir, f'idx{idx}.png'))
+                bs = deg_recon.size(0)
+                for b in range(bs):
+                    img = deg_recon[b].detach().cpu() 
+                    save_path = os.path.join(vis_dir, f'idx{idx}_img{b}.png')
+                    save_image(img, save_path)
+
+        return None

@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument('--shuffle', type=bool, default=True)
     parser.add_argument('--pin_memory', type=bool, default=False)
     parser.add_argument('--num_workers', type=int, default=2)
-    parser.add_argument('--branch_name', type=str, default="hazy")
+    parser.add_argument('--branch_name', type=str, default="")
     return parser.parse_args()
 
 
